@@ -1,25 +1,41 @@
-import React from 'react'
-import './App.css'
-// import ButtonComponent from './Components/ButtonComponent';
-import TodoApp from './Components/TodoList'
-
-
+import React from "react";
+import "./App.css";
+// import ButtonDemo from "./Components/ButtonComponent";
+import AppName from "./Components/AppName";
+import AddTodo from "./Components/AddTodo";
+import TodoItems from "./Components/TodoItems";
 
 
 function App() {
-  // const name = "Biraj";
+
+  const todoItems = [
+    {
+      name: "Buy Milk",
+      dueDate: "4/10/2024",
+    },
+    {
+      name: "Go to college",
+      dueDate: "4/10/2024",
+    },
+    {
+      name: "Prepare for professional practices",
+      dueDate: "4/11/2024"
+    }
+  ];
 
   return (
-    <div>
-    {/* <h2>Hello, {name}!</h2>
-    <p>Welcome to the world of React.</p>
+    // <>
+    //   {/* <h2>Hello, {name}!</h2>
+    //   <p>Welcome to the world of React.</p>
+    //   <ButtonComponent /> */}
+    // </>
+    <center className="todo-container">
+      <AppName />
+      <AddTodo />
+      <TodoItems todoItems={todoItems}></TodoItems>
 
-    <ButtonComponent/> */}
-    <TodoApp/>
-
-    
-    </div>
-  )
+    </center>
+  );
 }
 
-export default App
+export default App;
