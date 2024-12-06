@@ -5,7 +5,8 @@ const ElectronicProducts = ({products}) => {
     <>
       <ul className="list-group">
         {products.map((item) => (
-        <Products key={item} electronicItems = {item}></Products>
+        <Products key={item} electronicItems = {item} 
+        handleBuyButton = {()=> alert(`${item} bought successfully`)}></Products>
         ))}
       </ul>
     </>
