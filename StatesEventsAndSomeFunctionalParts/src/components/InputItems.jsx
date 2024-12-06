@@ -1,11 +1,14 @@
-import styles from "./InputItems.module.css"
+import styles from "./InputItems.module.css";
 
-const InputItems = ({handleOnChange}) =>{
+const InputItems = ({ handleOnKeyDown }) => {
+  return (
+    <input
+      type="text"
+      placeholder="Enter electronic products..."
+      className={styles.inputItems}
+      onKeyDown={handleOnKeyDown} 
+    />
+  );
+};
 
-   
-    return <input type="text"  placeholder="Enter electronic products..."  
-    className={styles.inputItems}
-    onChange= {handleOnChange} />;
-
-}
 export default InputItems;
