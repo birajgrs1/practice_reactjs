@@ -15,13 +15,17 @@ function App() {
     "Tablets",
   ];
 
+  const handleOnChange = (event) => {
+    console.log(event.target.value);
+  };
+
   return (
     <>
       <Container>
         <h1 className="heading">Electronic Products</h1>
-      
+
         <ErrMessage products={productLists}></ErrMessage>
-        <InputItems></InputItems>
+        <InputItems OnChange={handleOnChange}></InputItems>
         <ElectronicProducts products={productLists}></ElectronicProducts>
       </Container>
 
