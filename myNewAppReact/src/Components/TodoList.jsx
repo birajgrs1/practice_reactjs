@@ -1,8 +1,7 @@
 import React from "react";
-import './TodoList.css';
+import "./TodoList.css";
 
-
-const TodoList = ({ todoName, todoDate }) => {
+const TodoList = ({ todoName, todoDate, onDeleteClicked }) => {
   return (
     <div>
       <div className="container">
@@ -10,7 +9,11 @@ const TodoList = ({ todoName, todoDate }) => {
           <div className="col-6">{todoName}</div>
           <div className="col-4">{todoDate}</div>
           <div className="col-2">
-            <button type="button" className="btn btn-danger todo-button">
+            <button
+              type="button"
+              className="btn btn-danger todo-button"
+              onClick={() => onDeleteClicked(todoName)}
+            >
               Delete
             </button>
           </div>
