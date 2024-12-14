@@ -28,11 +28,10 @@ function App() {
   const handleNewTodoItems = (todoItemName, itemDueDate) => {
     console.log(`New item added: ${todoItemName} Date: ${itemDueDate} `);
 
-    const handleTodoItems = [
-      ...todo,
-      { name: todoItemName, dueDate: itemDueDate },
-    ];
-    setTodo(handleTodoItems);
+    setTodo((currentValue) => [
+      ...currentValue, 
+      { name: todoItemName, dueDate: itemDueDate }
+    ]);
   };
 
   const handleToDeleteItems = (todoItemName) => {
@@ -50,7 +49,10 @@ function App() {
       <AppName />
       <AddTodo onNewItem={handleNewTodoItems} />
       {todo.length === 0 && <WelcomeMsg></WelcomeMsg>}
-      <TodoItems todoItems={todo} onDeleteclicked={handleToDeleteItems}></TodoItems>
+      <TodoItems
+        todoItems={todo}
+        onDeleteclicked={handleToDeleteItems}
+      ></TodoItems>
     </center>
   );
 }
