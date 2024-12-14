@@ -17,6 +17,7 @@ const TodoList = ({ todoName, todoDate, onDeleteClicked }) => {
               onClick={() => onDeleteClicked(todoName)}
             >
               {/* Delete */}
+              
               <MdDelete />
 
             </button>

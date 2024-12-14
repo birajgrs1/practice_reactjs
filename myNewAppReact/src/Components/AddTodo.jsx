@@ -14,7 +14,9 @@ const AddTodo = ({ onNewItem }) => {
     setDueDate(event.target.value);
   };
 
-  const handleAddButton = () => {
+  const handleAddButton = (e) => {
+    // console.log(e);
+    e.preventDefault();
     onNewItem(todoName, dueDate);
     setDueDate("");
     setTodoName("");
@@ -22,7 +24,7 @@ const AddTodo = ({ onNewItem }) => {
 
   return (
     <div className="container text-center">
-      <div className="row todo-row">
+      <form className="row todo-row" onSubmit={handleAddButton}>
         <div className="col-6">
           <input
             type="text"
@@ -36,15 +38,16 @@ const AddTodo = ({ onNewItem }) => {
         </div>
         <div className="col-2">
           <button
-            type="button"
+            // type="button"
+            type="submit"
             className="btn btn-success todo-button"
-            onClick={handleAddButton}
+            // onClick={}
           >
             {/* Add */}
             <IoAddSharp />
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
