@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import "./App.css";
 // import ButtonDemo from "./Components/ButtonComponent";
 import AppName from "./Components/AppName";
@@ -6,6 +6,20 @@ import AddTodo from "./Components/AddTodo";
 import TodoItems from "./Components/TodoItems";
 import WelcomeMsg from "./Components/WelcomeMsg";
 import TodoItemsContext from "./store/contexts/todo-items-context";
+
+const todoItemsReducer = (currentTodoItems, action) => {
+  if (action.type === "New_Item") {
+    return [
+      ...currentTodoItems,
+      { name: action.payload.itemName, dueDate: action.payload.itemDueDate },
+    ];
+  } else if (action.type === "Delete_Item") {
+    return currentTodoItems.filter(
+      (item) => item.name !== action.payload.itemName
+    );
+  }
+  return currentTodoItems;
+};
 
 function App() {
   // const todoItems = [
@@ -25,10 +39,10 @@ function App() {
   // const todoItems = [];
   // const [state, setState] = useState(initialState)
 
-  const [todo, setTodo] = useState([]);
+  // const [todo, setTodo] = useState([]);
+  const [todoItems, dispatchTodoItems] = useReducer(todoItemsReducer, []);
 
   /*
-
   const handleNewTodoItems = (todoItemName, itemDueDate) => {
     // console.log(`New item added: ${todoItemName} Date: ${itemDueDate} `);
 
@@ -44,6 +58,7 @@ function App() {
     setTodo(updatedTodo);
   };
   */
+ /*
   const addNewTodoItems = (todoItemName, itemDueDate) => {
     // console.log(`New item added: ${todoItemName} Date: ${itemDueDate} `);
 
@@ -52,11 +67,20 @@ function App() {
       { name: todoItemName, dueDate: itemDueDate },
     ]);
   };
+  */
+  const addNewTodoItems = (itemName, itemDueDate) => {
+    dispatchTodoItems({
+      type: "New_Item",
+      payload: { itemName, itemDueDate },
+    });
+  };
 
   const deleteTodoItems = (todoItemName) => {
     // console.log(`${todoItemName} deleted.`);
-    const updatedTodo = todo.filter((item) => item.name !== todoItemName);
-    setTodo(updatedTodo);
+    dispatchTodoItems({
+      type: "Delete_Item",
+      payload: { itemName: todoItemName },
+    });
   };
 
   return (
@@ -67,7 +91,7 @@ function App() {
 
     <TodoItemsContext.Provider
       value={{
-        todoItems: todo,
+        todoItems: todoItems,
         addTodoItem: addNewTodoItems,
         deleteTodoItem: deleteTodoItems,
       }}
