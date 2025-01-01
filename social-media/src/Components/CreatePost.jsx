@@ -15,11 +15,14 @@ const CreatePost = () => {
     const userId = userIdElement.current.value;
     const postTitle = postTitleElement.current.value;
     const postBody = postBodyElement.current.value;
-    const noOfReactions = reactionsElement.current.value;
-    const noOfTags = tagsElement.current.value.split(" ");
+    const noOfReactions = parseInt(reactionsElement.current.value, 10) || 0;
+    const noOfTags = tagsElement.current.value
+      .split(" ")
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0);
 
     userIdElement.current.value = "";
-    postTitleElement.current.value ="";
+    postTitleElement.current.value = "";
     postBodyElement.current.value = "";
     reactionsElement.current.value = "";
     tagsElement.current.value = "";
@@ -92,7 +95,7 @@ const CreatePost = () => {
             ref={tagsElement}
             className="form-control"
             id="tags"
-            placeholder="Please enter tags using space? "
+            placeholder="Please enter tags using space?"
           />
         </div>
 
@@ -103,4 +106,5 @@ const CreatePost = () => {
     </>
   );
 };
+
 export default CreatePost;

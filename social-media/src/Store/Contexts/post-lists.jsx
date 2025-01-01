@@ -3,8 +3,10 @@ import { createContext, useReducer } from "react";
 export const PostLists = createContext({
   postList: [],
   addPost: () => {},
+  addInitialPosts: () => {},
   deletePost: () => {},
 });
+
 
 const postListReducer = (currentPostList, action) => {
   let newPostList = currentPostList;
@@ -12,30 +14,37 @@ const postListReducer = (currentPostList, action) => {
     newPostList = currentPostList.filter(
       (post) => post.id !== action.payload.postId
     );
+  } else if (action.type === "ADD_INITIAL_POSTS") {
+    newPostList = action.payload.posts; 
+  } else if (action.type === "ADD_POST") {
+    newPostList = [action.payload, ...currentPostList];
   }
-  else if(action.type === "ADD_POST"){
-    newPostList = [action.payload,...currentPostList];
-  }
+
   return newPostList;
 };
 
 const PostListProvider = ({ children }) => {
-  const [postList, dispatchPostList] = useReducer(
-    postListReducer,
-    DEFAULT_POSTLIST
-  );
+  const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
-  const addPost =(userId, postTitle, postBody, noOfReactions, noOfTags) =>{
+  const addPost = (userId, postTitle, postBody, reactions, noOfTags) => {
     dispatchPostList({
       type: "ADD_POST",
-      payload:{
+      payload: {
         id: Date.now(),
         title: postTitle,
         body: postBody,
-        reactions: noOfReactions,
-        tags: noOfTags
+        reactions: { likes: reactions.likes, dislikes: reactions.dislikes }, 
+        tags: noOfTags,
       },
+    });
+  };
 
+  const addInitialPosts = (posts) => { 
+    dispatchPostList({
+      type: "ADD_INITIAL_POSTS", 
+      payload: {
+        posts,
+      },
     });
   };
 
@@ -50,12 +59,17 @@ const PostListProvider = ({ children }) => {
   };
 
   return (
-    <PostLists.Provider value={{ postList, addPost, deletePost }}>
+    <PostLists.Provider
+      value={{ postList, addPost, addInitialPosts, deletePost }}
+    >
       {children}
     </PostLists.Provider>
   );
 };
 
+export default PostListProvider;
+
+/*
 const DEFAULT_POSTLIST = [
   {
     id: "1",
@@ -75,4 +89,5 @@ const DEFAULT_POSTLIST = [
     tags: ["Under Graduation", "Unbelivable", "Joy"],
   },
 ];
-export default PostListProvider;
+*/
+// export default PostListProvider;

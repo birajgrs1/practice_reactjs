@@ -3,16 +3,16 @@ import { AiFillDelete } from "react-icons/ai";
 import { PostLists } from "../Store/Contexts/post-lists";
 
 const Post = ({ post }) => {
+  const { deletePost } = useContext(PostLists);
+  const { likes, dislikes } = post.reactions;
 
-  const {deletePost} = useContext(PostLists);
   return (
     <div className="card post-card">
       <div className="card-body">
         <h5 className="card-title">
           {post.title}
-          {post.title}
           <span
-            className=" btn position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            className="btn position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
             onClick={() => deletePost(post.id)}
           >
             <AiFillDelete />
@@ -25,7 +25,7 @@ const Post = ({ post }) => {
           </span>
         ))}
         <div className="alert alert-success reactions" role="alert">
-          This post has been reacted by {post.reactions} people.
+          This post has been reacted to by {likes + dislikes} people.
         </div>
       </div>
     </div>
