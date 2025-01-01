@@ -1,5 +1,6 @@
 import  React from 'react'
-// import './App.css'
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Heading from './components/Heading'
 import Text1 from './components/Text1'
 import ShowTime from './components/ShowTime'
