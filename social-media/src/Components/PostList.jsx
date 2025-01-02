@@ -26,10 +26,15 @@ const PostList = () => {
       .then((data) => {
         addInitialPosts(data.posts);
         setFetching(false);
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') {
+          console.error(error);
+        }
       });
 
     return () => {
-      console.log("Cleaning up UseEffect.");
+      // console.log("Cleaning up UseEffect.");
       controller.abort();
     };
   }, []);

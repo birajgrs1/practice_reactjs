@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext,  useReducer } from "react";
 
 export const PostLists = createContext({
   postList: [],
@@ -57,6 +57,10 @@ const PostListProvider = ({ children }) => {
       },
     });
   };
+
+  // const arr = [5,2,4,7,1,0,9];
+  // const sortedArr = useMemo(()=>arr.sort(),[arr]);
+  // console.log(sortedArr);
 
   return (
     <PostLists.Provider
