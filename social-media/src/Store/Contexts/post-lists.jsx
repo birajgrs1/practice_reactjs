@@ -1,12 +1,11 @@
-import { createContext,  useReducer } from "react";
+import { createContext, useReducer, useEffect,useState } from "react";
 
 export const PostLists = createContext({
   postList: [],
   addPost: () => {},
-  addInitialPosts: () => {},
+  fetching: false,
   deletePost: () => {},
 });
-
 
 const postListReducer = (currentPostList, action) => {
   let newPostList = currentPostList;
@@ -15,56 +14,65 @@ const postListReducer = (currentPostList, action) => {
       (post) => post.id !== action.payload.postId
     );
   } else if (action.type === "ADD_INITIAL_POSTS") {
-    newPostList = action.payload.posts; 
+    newPostList = action.payload.posts;
   } else if (action.type === "ADD_POST") {
     newPostList = [action.payload, ...currentPostList];
   }
-
   return newPostList;
 };
 
 const PostListProvider = ({ children }) => {
   const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
-  const addPost = (userId, postTitle, postBody, reactions, noOfTags) => {
+  const addPost = (post) => {
     dispatchPostList({
       type: "ADD_POST",
-      payload: {
-        id: Date.now(),
-        title: postTitle,
-        body: postBody,
-        reactions: { likes: reactions.likes, dislikes: reactions.dislikes }, 
-        tags: noOfTags,
-      },
+      payload: post,
     });
   };
 
-  const addInitialPosts = (posts) => { 
+  const addInitialPosts = (posts) => {
     dispatchPostList({
-      type: "ADD_INITIAL_POSTS", 
-      payload: {
-        posts,
-      },
+      type: "ADD_INITIAL_POSTS",
+      payload: { posts },
     });
   };
 
   const deletePost = (postId) => {
-    // console.log(`Delete post called for: ${postId}`);
     dispatchPostList({
       type: "DELETE_POST",
-      payload: {
-        postId,
-      },
+      payload: { postId },
     });
   };
 
-  // const arr = [5,2,4,7,1,0,9];
-  // const sortedArr = useMemo(()=>arr.sort(),[arr]);
-  // console.log(sortedArr);
+  const [fetching, setFetching] = useState(false);
+
+  useEffect(() => {
+    setFetching(true);
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    fetch("https://dummyjson.com/posts", { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        addInitialPosts(data.posts);
+        setFetching(false);
+      })
+      .catch((error) => {
+        if (error.name !== "AbortError") {
+          console.error(error);
+        }
+      });
+
+    return () => {
+      // console.log("Cleaning up UseEffect.");
+      controller.abort();
+    };
+  }, []);
 
   return (
     <PostLists.Provider
-      value={{ postList, addPost, addInitialPosts, deletePost }}
+      value={{ postList, fetching,addPost, addInitialPosts, deletePost }}
     >
       {children}
     </PostLists.Provider>
@@ -90,8 +98,7 @@ const DEFAULT_POSTLIST = [
     body: "Complete 4 year CSIT program. ",
     reactions: 8,
     userId: "user-7",
-    tags: ["Under Graduation", "Unbelivable", "Joy"],
+    tags: ["Under Graduation", "Unbelievable", "Joy"],
   },
 ];
 */
-// export default PostListProvider;
