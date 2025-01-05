@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Sidebar = ({ selectedTab, setSelectedTab }) => {
+const Sidebar = () => {
   return (
     <>
       <div
@@ -21,37 +22,36 @@ const Sidebar = ({ selectedTab, setSelectedTab }) => {
         <ul className="nav nav-pills flex-column mb-auto">
           <li
             className="nav-item"
-            onClick={() => {
-              setSelectedTab("Home");
-            }}
+            // onClick={() => {
+            //   console.log("Home clicked.");
+            // }}
           >
             {/* Home Tab */}
-            <a
-              href="#"
-              className={`nav-link text-white ${
-                selectedTab === "Home" ? "active" : ""
-              }`}
+            <Link
+              to="/"
+              className={`nav-link text-white 
+              `}
               aria-current="page"
             >
               <i className="bi bi-house-door me-2"></i>
               Home
-            </a>
+            </Link>
           </li>
           <li
-            onClick={() => {
-              setSelectedTab("Create Post");
-            }}
+            // onClick={() => {
+            //   console.log("Create post clicked");
+            // }}
           >
             {/* Create Post Tab */}
-            <a
-              href="#"
-              className={`nav-link text-white ${
-                selectedTab === "Create Post" ? "active" : ""
-              }`}
+            <Link
+              to="/create-post"
+              className={`nav-link text-white 
+         
+              `}
             >
               <i className="bi bi-speedometer2 me-2"></i>
               Create Post
-            </a>
+            </Link>
           </li>
         </ul>
         <hr />
