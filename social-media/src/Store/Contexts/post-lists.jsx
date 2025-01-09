@@ -1,9 +1,9 @@
-import { createContext, useReducer, useEffect,useState } from "react";
+import { createContext, useReducer } from "react";
 
 export const PostLists = createContext({
   postList: [],
   addPost: () => {},
-  fetching: false,
+  // fetching: false,
   deletePost: () => {},
 });
 
@@ -31,6 +31,7 @@ const PostListProvider = ({ children }) => {
     });
   };
 
+
   const addInitialPosts = (posts) => {
     dispatchPostList({
       type: "ADD_INITIAL_POSTS",
@@ -45,8 +46,9 @@ const PostListProvider = ({ children }) => {
     });
   };
 
-  const [fetching, setFetching] = useState(false);
+  // const [fetching, setFetching] = useState(false);
 
+  /*
   useEffect(() => {
     setFetching(true);
     const controller = new AbortController();
@@ -69,10 +71,10 @@ const PostListProvider = ({ children }) => {
       controller.abort();
     };
   }, []);
-
+*/
   return (
     <PostLists.Provider
-      value={{ postList, fetching,addPost, addInitialPosts, deletePost }}
+      value={{ postList, addPost, addInitialPosts, deletePost }}
     >
       {children}
     </PostLists.Provider>
