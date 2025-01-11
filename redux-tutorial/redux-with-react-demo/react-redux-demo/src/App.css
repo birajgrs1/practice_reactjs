@@ -1,0 +1,7 @@
+.number-input{
+    max-width: 150px;
+    border-radius: 15%;
+    border: 3px solid rgb(35, 8, 109);
+    background-color: rgb(176, 229, 253);
+    color: rgba(0, 0, 0, 0.815);
+}
