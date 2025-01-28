@@ -1,0 +1,8 @@
+.counter-container{
+    text-align: center;
+    margin-top: 50px;
+}
+
+button{
+    min-width: 100px;
+}
